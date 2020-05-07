@@ -1,0 +1,303 @@
+swagger: "2.0"
+info:
+  title: Kadaya Backend API Documentation
+  version: 1.0.0
+host: localhost:3000
+schemes:
+  - http
+tags:
+  - name: Shop
+    description: Shop
+  - name: Buyer
+    description: Buyer
+  - name: Category
+    description: Category
+  - name: Image
+    description: Image
+  - name: Item
+    description: Item
+  - name: Monitoring
+    description: Monitoring
+  - name: Order
+    description: Order
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: x-access-token
+paths:
+  /buyer/:
+    post:
+      summary: Sign up
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: json body
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - address
+              - phone
+              - password
+              - expo_token
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              address:
+                type: string
+              phone:
+                type: string
+              password:
+                type: string
+              latitude:
+                type: number
+              longitude:
+                type: number
+              expo_token:
+                type: string
+                example: ExponentPushToken[HFjeKTDLxLdS2mQI5Hk_fZ]
+      responses:
+        201:
+          description: Updated
+        400:
+          description: Not Found
+        502:
+          description: Server Error
+
+
+
+  /buyer/{buyer_id}:
+    get:
+      security:
+        - ApiKeyAuth: []
+      summary: Get by id
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      parameters:
+        - name: buyer_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          description: Not Found
+        502:
+          description: Server Error
+
+
+    put:
+      security:
+        - ApiKeyAuth: []
+      summary: Update exsiting buyer
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: buyer_id
+          type: string
+          required: true
+        - in: body
+          name: user
+          description: json body
+          schema:
+            type: object
+            required:
+              - name
+              - email
+              - address
+              - phone
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              address:
+                type: string
+              phone:
+                type: string
+      responses:
+        200:
+          description: Updated
+        400:
+          description: Not Found
+        502:
+          description: Server Error
+  /buyer/{buyer_id}/password:
+    put:
+      security:
+        - ApiKeyAuth: []
+      summary: Change buyer password
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          required: true
+          name: buyer_id
+          type: string
+          default: 0fc38e1b-01ea-4d7d-95f2-75f0c0ff4136
+        - in: body
+          name: user
+          description: json body
+          schema:
+            type: object
+            required:
+              - old_password
+              - new_password
+            properties:
+              old_password:
+                type: string
+                example: abc
+              new_password:
+                type: string
+      responses:
+        200:
+          description: Updated
+        404:
+          description: Not found
+        400:
+          description: Bad Request
+        502:
+          description: Server Error
+
+  /buyer/{buyer_id}/location:
+    put:
+      security:
+        - ApiKeyAuth: []
+      summary: Update location of a buyer
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: buyer_id
+          required: true
+          type: string
+        - in: body
+          name: user
+          description: json body
+          schema:
+            type: object
+            required:
+              - latitude
+              - longitude
+            properties:
+              latitude:
+                type: number
+              longitude:
+                type: number
+      responses:
+        200:
+          description: Updated
+        400:
+          description: Not Found
+        502:
+          description: Server Error
+
+
+  /buyer/{buyer_id}/history:
+    get:
+      security:
+        - ApiKeyAuth: []
+      summary: Get order history of a buyer
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: buyer_id
+          required: true
+          type: string
+      responses:
+        200:
+          description: Updated
+        400:
+          description: Not Found
+        502:
+          description: Server Error
+
+
+  /buyer/{buyer_id}/current-orders:
+    get:
+      security:
+        - ApiKeyAuth: []
+      summary: Get by current orders by id
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      parameters:
+        - name: buyer_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+        404:
+          description: Not Found
+        502:
+          description: Server Error
+
+  /buyer/login:
+    post:
+      summary: Login
+      tags:
+        - Buyer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: json body
+          schema:
+            type: object
+            required:
+              - password
+              - phone
+              - expo_token
+            properties:
+              password:
+                type: string
+                example: abc
+              phone:
+                type: string
+                example: 0786745678
+              expo_token:
+                type: string
+                example: ExponentPushToken[HFjeKTDLxLdS2mQI5Hk_fZ]
+      responses:
+        200:
+          description: Updated
+        502:
+          description: Server Error
+

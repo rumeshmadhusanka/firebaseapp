@@ -20,23 +20,18 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(cors());
 
-//support parsing of url params
-express_urls(app);
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 
 //routes
 routes(app);
 
-//server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-	console.log("Server is listening to port " + port);
-});
+module.exports = {
+	webApi: functions.https.onRequest(app)
 
-module.exports =  {webApi: functions.https.onRequest(app)};
+};

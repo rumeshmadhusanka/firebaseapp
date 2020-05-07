@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/rumeshmadhusanka/firebaseapp/issues"
   },
-  "homepage": "https://github.com/rumeshmadhusanka/firebaseapp#readme"
+  "homepage": "https://github.com/rumeshmadhusanka/firebaseapp#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "latest",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
+  }
 }
